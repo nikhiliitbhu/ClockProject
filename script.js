@@ -17,5 +17,3 @@ tabButtons.forEach(button => {
         document.getElementById(tabName).classList.add('active');
     });
 });
-
-
