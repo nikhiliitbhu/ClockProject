@@ -8,6 +8,14 @@ const clockDate = document.getElementById('clock-date');
 const toggleFormatButton = document.getElementById('format-toggle');
 const formatLabel = document.getElementById('format-label');
 
+// Stopwatch
+const stopwatchTime = document.getElementById('stopwatch-time');
+const stopwatchStart = document.getElementById('stopwatch-start');
+const stopwatchPause = document.getElementById('stopwatch-pause');
+const stopwatchReset = document.getElementById('stopwatch-reset');
+
+
+
 let hour12 = true; // Flag to track 12-hour or 24-hour format
 
 
@@ -56,9 +64,56 @@ const clock = () => {
 
 
 toggleFormatButton.addEventListener('click', () => {
-    hour12 = !hour12;   
+    hour12 = !hour12;
     toggleFormatButton.textContent = hour12 ? 'Switch to 24-Hour Format' : 'Switch to 12-Hour Format';
     formatLabel.textContent = hour12 ? '24-Hour Format' : '12-Hour Format';
 });
 
 setInterval(clock, 1000); // clock ko har second update karta hai
+
+// Stopwatch functionality
+
+let mSec = "0";
+let sec = "0";
+let min = "0";
+let stopwatchId = null;
+
+stopwatchStart.addEventListener('click', function() {
+    if (stopwatchId !== null){
+        clearInterval(stopwatchId); // Agar stopwatch already chal raha hai to usko stop kar deta hai
+    }
+    stopwatchId = setInterval(stopwatch, 10); // Stopwatch ko 10 milliseconds ke interval par update karta hai
+});
+
+stopwatchPause.addEventListener('click', function() {
+    clearInterval(stopwatchId); // Stopwatch ko pause karta hai
+    stopwatchId = null;
+});
+
+stopwatchReset.addEventListener('click', function() {
+    clearInterval(stopwatchId); 
+    stopwatchTime.textContent = "00:00:00"; // Stopwatch time ko reset karta hai
+    mSec = "00";
+    sec = "00";
+    min = "00";
+    stopwatchId = null;
+});
+
+function stopwatch() {
+    mSec++;
+    if (mSec == 100) {
+        mSec = "00";
+        sec++;
+        if (sec == 60) {
+            sec = "00";
+            min++;
+        }
+    }
+
+    let mSecString = mSec < 10 ? `0${mSec}` : mSec;
+    let secString = sec < 10 ? `0${sec}` : sec;
+    let minString = min < 10 ? `0${min}` : min;
+
+    stopwatchTime.textContent = `${minString}:${secString}:${mSecString}`; // Stopwatch time ko display karta hai
+
+}
