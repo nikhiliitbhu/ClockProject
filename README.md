@@ -130,5 +130,5 @@ ClockProject/
 
 ## Notes
 
-- Detailed standalone analysis is also available in `CODE_ANALYSIS_REPORT.md`.
+- Detailed standalone analysis is also available in `README.md`.
 - Current priority should be Timer completion and Lap implementation before production use.
