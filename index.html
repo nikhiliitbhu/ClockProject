@@ -20,11 +20,11 @@
         <!-- Tab Content -->
         <div class="tab-content">
             <!-- Clock Tab -->
-            <div id="clock" class="tab-pane active">
+            <div id="clock" class="tab-pane active ">
                 <div class="clock-display">
-                    <div class="time" id="clock-time">00:00:00</div>
-                    <div class="date" id="clock-date">Monday, January 1, 2024</div>
-                    <div class="period" id="clock-period">AM</div>
+                    <div class="time" id="clock-time" onclick="updateClock()">00:00:00</div>
+                    <div class="date" id="clock-date" onclick="updateClock()">Monday, January 1, 2024</div>
+                    <div class="period" id="clock-period" onclick="updateClock()">AM</div>
                 </div>
                 <div class="format-toggle">
                     <label>
@@ -37,34 +37,34 @@
             <!-- Timer Tab -->
             <div id="timer" class="tab-pane">
                 <div class="timer-display">
-                    <div class="time" id="timer-time">00:00:00</div>
+                    <div class="time" id="timer-time" onclick="updateTimer()">00:00:00</div>
                 </div>
                 <div class="timer-input">
-                    <input type="number" id="timer-hours" min="0" max="23" placeholder="HH" value="0">
+                    <input type="number" id="timer-hours" min="0" max="23" placeholder="HH" value="0" oninput="validateTimerInput('timer-hours')">
                     <span>:</span>
-                    <input type="number" id="timer-minutes" min="0" max="59" placeholder="MM" value="0">
+                    <input type="number" id="timer-minutes" min="0" max="59" placeholder="MM" value="0" oninput="validateTimerInput('timer-minutes')">
                     <span>:</span>
-                    <input type="number" id="timer-seconds" min="0" max="59" placeholder="SS" value="0">
+                    <input type="number" id="timer-seconds" min="0" max="59" placeholder="SS" value="0" oninput="validateTimerInput('timer-seconds')">
                 </div>
                 <div class="controls">
-                    <button class="btn btn-primary" id="timer-start">Start</button>
-                    <button class="btn btn-pause" id="timer-pause">Pause</button>
-                    <button class="btn btn-reset" id="timer-reset">Reset</button>
+                    <button class="btn btn-primary" id="timer-start" onclick="timerstart()">Start</button>
+                    <button class="btn btn-pause" id="timer-pause" onclick="timerpause()">Pause</button>
+                    <button class="btn btn-reset" id="timer-reset" onclick="timerreset()">Reset</button>
                 </div>
             </div>
 
             <!-- Stopwatch Tab -->
             <div id="stopwatch" class="tab-pane">
                 <div class="stopwatch-display">
-                    <div class="time" id="stopwatch-time">00:00:00</div>
+                    <div class="time" id="stopwatch-time" onclick="updateStopwatch()">00:00:00</div>
                 </div>
                 <div class="controls">
-                    <button class="btn btn-primary" id="stopwatch-start">Start</button>
-                    <button class="btn btn-pause" id="stopwatch-pause">Pause</button>
-                    <button class="btn btn-reset" id="stopwatch-reset">Reset</button>
+                    <button class="btn btn-primary" id="stopwatch-start" onclick="stopwatchstart()">Start</button>
+                    <button class="btn btn-pause" id="stopwatch-pause" onclick="stopwatchpause()">Pause</button>
+                    <button class="btn btn-reset" id="stopwatch-reset" onclick="stopwatchreset()">Reset</button>        
                 </div>
                 <div class="laps">
-                    <button class="btn btn-secondary" id="stopwatch-lap">Lap</button>
+                    <button class="btn btn-secondary" id="stopwatch-lap" onclick="stopwatchlap()">Lap</button>
                 </div>
                 <div class="lap-list" id="lap-list"></div>
             </div>
