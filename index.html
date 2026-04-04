@@ -11,6 +11,7 @@
         <h1>Time Management App by Nitin Patel</h1>
         
         <!-- Tab Navigation -->
+        
         <div class="tab-navigation">
             <button class="tab-button active" data-tab="clock">Clock</button>
             <button class="tab-button" data-tab="timer">Timer</button>
@@ -33,6 +34,7 @@
                     </label>
                 </div>
             </div>
+            
 
             <!-- Timer Tab -->
             <div id="timer" class="tab-pane">
@@ -59,18 +61,18 @@
                     <div class="time" id="stopwatch-time">00:00:00</div>
                 </div>
                 <div class="controls">
-                    <button class="btn btn-primary" id="stopwatch-start">Start</button>
-                    <button class="btn btn-pause" id="stopwatch-pause">Pause</button>
-                    <button class="btn btn-reset" id="stopwatch-reset">Reset</button>
+                    <button class="btn btn-primary" id="stopwatch-start" onclick="start()">Start</button>
+                    <button class="btn btn-pause" id="stopwatch-pause" onclick="pause()">Pause</button>
+                    <button class="btn btn-reset" id="stopwatch-reset" onclick="reset()">Reset</button>
                 </div>
                 <div class="laps">
-                    <button class="btn btn-secondary" id="stopwatch-lap">Lap</button>
+                    <button class="btn btn-secondary" id="stopwatch-lap" onclick="lap()">Lap</button>
                 </div>
                 <div class="lap-list" id="lap-list"></div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
