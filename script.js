@@ -1,12 +1,12 @@
 // Get all tab buttons and tab panes
-const tabButtons = document.querySelectorAll('.tab-button');
-const tabPanes = document.querySelectorAll('.tab-pane');
+let tabButtons = document.querySelectorAll('.tab-button');
+let tabPanes = document.querySelectorAll('.tab-pane');
 
 
 // Add click event listener to each tab button
 tabButtons.forEach(button => {
     button.addEventListener('click', function() {
-        const tabName = this.getAttribute('data-tab');
+        let tabName = this.getAttribute('data-tab');
         
         // Remove active class from all buttons and panes
         tabButtons.forEach(btn => btn.classList.remove('active'));
@@ -17,10 +17,24 @@ tabButtons.forEach(button => {
         document.getElementById(tabName).classList.add('active');
     });
 });
-setInterval(()=> {
-    const now = new Date();
-    document.getElementById('clock-time').innerText = now.toLocaleTimeString();
-    document.getElementById('clock-date').innerText = now.toLocaleDateString();
+
+//time and date code
+setInterval(() => {
+  let d = new Date(),
+      h = d.getHours(),
+      p = h >= 12 ? "PM" : "AM",
+      f = document.getElementById("format-toggle").checked;
+
+  if (!f) h = h % 12 || 12;
+
+  document.getElementById("clock-time").innerText =
+    `${String(h).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}:${String(d.getSeconds()).padStart(2,"0")}`;
+
+  document.getElementById("clock-period").innerText = f ? "" : p;
+
+  document.getElementById("clock-date").innerText =
+    d.toLocaleDateString("en-US", { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+
 }, 1000);
 
 //stop watch code
@@ -33,9 +47,9 @@ function start() {
         isRunning = true;
         stopwatchInterval = setInterval(() => {
             stopwatchTime += 1000;
-            const hours = String(Math.floor(stopwatchTime / 3600000)).padStart(2, '0');
-            const minutes = String(Math.floor((stopwatchTime % 3600000) / 60000)).padStart(2, '0');
-            const seconds = String(Math.floor((stopwatchTime % 60000) / 1000)).padStart(2, '0');
+            let hours = String(Math.floor(stopwatchTime / 3600000)).padStart(2, '0');
+            let minutes = String(Math.floor((stopwatchTime % 3600000) / 60000)).padStart(2, '0');
+            let seconds = String(Math.floor((stopwatchTime % 60000) / 1000)).padStart(2, '0');
             document.getElementById('stopwatch-time').innerText = `${hours}:${minutes}:${seconds}`;
         }, 1000);
     }
@@ -57,11 +71,47 @@ function reset() {
 
 function lap() {
     if (isRunning) {
-        const lapTime = document.getElementById('stopwatch-time').innerText;
-        const lapList = document.getElementById('lap-list');
-        const lapItem = document.createElement('div');
+        let lapTime = document.getElementById('stopwatch-time').innerText;
+        let lapList = document.getElementById('lap-list');
+        let lapItem = document.createElement('div');
         lapItem.classList.add('lap-item');
         lapItem.innerText = `Lap ${lapList.children.length + 1}: ${lapTime}`;
         lapList.appendChild(lapItem);
     }
 }
+
+//timer code
+let time = 0;
+let interval;
+
+function start(){
+    let hours = document.getElementById("timer-hours").value;
+    let minutes = document.getElementById("timer-miniutes").value;
+    let seconds = document.getElementById("timer-seconds").value;
+    if(time === 0){
+        time = (hours * 3600 + minutes * 60 + seconds) * 1000;
+    }
+    interval = setInterval (() => {
+        time -= 1000;
+         let total = time / 1000;
+        let hours = Math.floor(total / 3600);
+        let minutes = Math.floor((total % 3600) / 60);
+        let seconds = Math.floor(total % 60);
+
+        //format
+          document.getElementById("timer-time").innerText =
+            String(hours).padStart(2, "0") + ":" +
+            String(minutes).padStart(2, "0") + ":" +
+            String(seconds).padStart(2, "0");
+
+            if (time <= 0) {
+            clearInterval(interval);
+            alert("Time Up!");
+        }
+    }, 1000);
+}
+
+function pause() {
+    clearInterval(interval);
+}
+
