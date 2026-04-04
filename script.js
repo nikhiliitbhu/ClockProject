@@ -14,6 +14,16 @@ const stopwatchStart = document.getElementById('stopwatch-start');
 const stopwatchPause = document.getElementById('stopwatch-pause');
 const stopwatchReset = document.getElementById('stopwatch-reset');
 
+//Timer
+const timerTime = document.getElementById('timer-time');
+const timerStart = document.getElementById('timer-start');
+const timerPause = document.getElementById('timer-pause');
+const timerReset = document.getElementById('timer-reset');
+
+const timerMinInput = document.getElementById('timer-minutes');
+const timerSecInput = document.getElementById('timer-seconds'); 
+const timerHoursInput = document.getElementById('timer-hours');
+
 
 
 let hour12 = true; // Flag to track 12-hour or 24-hour format
@@ -87,7 +97,14 @@ stopwatchStart.addEventListener('click', function() {
 
 stopwatchPause.addEventListener('click', function() {
     clearInterval(stopwatchId); // Stopwatch ko pause karta hai
-    stopwatchId = null;
+     if (stopwatchId !== null){
+        stopwatchId = null; // Agar stopwatch already chal raha hai to 
+        (stopwatchPause.textContent == "play") ? (stopwatchPause.textContent = "pause") : (stopwatchPause.textContent = "play"); // Pause button ka text change karta hai
+    }else { 
+        
+    stopwatchId = setInterval(stopwatch, 10);
+    ; // Pause button ka text change karta ha,i
+    }
 });
 
 stopwatchReset.addEventListener('click', function() {
@@ -116,4 +133,18 @@ function stopwatch() {
 
     stopwatchTime.textContent = `${minString}:${secString}:${mSecString}`; // Stopwatch time ko display karta hai
 
+}
+
+// Timer functionality
+
+let timerId = null;     
+let timerMin = 0;
+let timerSec = 0;
+
+
+function getInputMs() {
+  const h = parseInt(timerHoursInput.value)   || 0;
+  const m = parseInt(timerMinInput.value) || 0;
+  const s = parseInt(timerSecInput.value) || 0;
+  return (h * 3600 + m * 60 + s) * 1000;
 }
