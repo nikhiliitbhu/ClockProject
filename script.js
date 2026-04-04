@@ -9,7 +9,7 @@ const clockperiod = document.getElementById('clock-period');
 const toggle= document.getElementById('formate-toggle');
 const formatelabel = document.getElementById('formate-label');
 
-let hours12 = true; // Default to 24-hour format
+let hours12 = true; // Default to 24-hour format here, you can change it to false if you want to default to 12-hour format
 
 
 // Add click event listener to each tab button
