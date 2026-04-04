@@ -148,3 +148,24 @@ function getInputMs() {
   const s = parseInt(timerSecInput.value) || 0;
   return (h * 3600 + m * 60 + s) * 1000;
 }
+
+function updateTimerDisplay() {
+    const h = Math.floor(timerSec / 3600);
+    const m = Math.floor((timerSec % 3600) / 60);
+    const s = timerSec % 60;
+    const hString = h < 10 ? `0${h}` : h;
+    const mString = m < 10 ? `0${m}` : m;
+    const sString = s < 10 ? `0${s}` : s;
+    timerTime.textContent = `${hString}:${mString}:${sString}`;
+}
+
+function timer(){
+    if (timerSec > 0) {
+        timerSec--;
+        updateTimerDisplay();
+    } else {
+        clearInterval(timerId);
+        timerId = null;
+        alert("Time's up!"); // Timer khatam hone par alert dikhata hai
+    }
+}
