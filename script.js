@@ -1,72 +1,40 @@
  // TAB SWITCH  
-let  tabs = document.getElementsByClassName("tab-button");
-let  panes = document.getElementsByClassName("tab-pane");
+const  tabs = document.getElementsByClassName("tab-button");
+const  panes = document.getElementsByClassName("tab-pane");
 
-for (let  i = 0; i < tabs.length; i++) {
+const clocktime = document.getElementById('clock-time');
+const clockdate = document.getElementById('clock-date');
 
-    tabs[i].onclick = function () {
+ 
 
-        // sab remove
-        for (let  j = 0; j < tabs.length; j++) {
-            tabs[j].classList.remove("active");
-            panes[j].classList.remove("active");
-        }
+// Add event listener to each tab button
+tabButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
 
-        // current add
-        this.classList.add("active");
-        let  id = this.getAttribute("data-tab");
-        document.getElementById(id).classList.add("active");
-    };
+        const tabName = this.getAttribute('data-tab');
+
+        // Remove active class from all buttons and panes
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabPanes.forEach(pane => pane.classList.remove('active'));
+
+        // Add active class to clicked button and corresponding pane
+        this.classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+    });
+});
+
+function updateClock() {
+    let timeDate =(new Date()).toString();
+    clocktime.innerText = timeDate.slice(16, 24);
+    clockdate.innerText = timeDate.slice(0, 15);
 }
 
+setInterval(updateClock,1000);
+updatetime();
 
-// CLOCK  
-let clockTime = document.getElementById("clock-time");
-let  clockDate = document.getElementById("clock-date");
-let  clockPeriod = document.getElementById("clock-period");
-let  formatToggle = document.getElementById("format-toggle");
 
-setInterval(function () {
+ 
 
-    let  now = new Date();
+ 
 
-    let  h = now.getHours();
-    let  m = now.getMinutes();
-    let  s = now.getSeconds();
-
-    let period = "AM";
-
-    if (h >= 12) {
-        period = "PM";
-    }
-
-    // 12 hour format
-    if (!formatToggle.checked) {
-        if (h > 12) {
-            h = h - 12;
-        }
-        if (h == 0) {
-            h = 12;
-        }
-    }
-
-    // 0 add
-    if (h < 10) h = "0" + h;
-    if (m < 10) m = "0" + m;
-    if (s < 10) s = "0" + s;
-
-    clockTime.innerText = h + ":" + m + ":" + s;
-    clockPeriod.innerText = formatToggle.checked ? "" : period;
-
-    // date
-    let  days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    let  months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-
-    let day = days[now.getDay()];
-    let date = now.getDate();
-    let month = months[now.getMonth()];
-    let  year = now.getFullYear();
-
-    clockDate.innerText = day + ", " + date + " " + month + " " + year;
-
-}, 1000);
+ 
