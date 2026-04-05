@@ -81,37 +81,54 @@ function lap() {
 }
 
 //timer code
+let t;
 let time = 0;
-let interval;
+let running = false;
 
-function start(){
-    let hours = document.getElementById("timer-hours").value;
-    let minutes = document.getElementById("timer-miniutes").value;
-    let seconds = document.getElementById("timer-seconds").value;
-    if(time === 0){
-        time = (hours * 3600 + minutes * 60 + seconds) * 1000;
+function start() {
+    if (running) return;
+
+    let h = +document.getElementById("timer-hours").value;
+    let m = +document.getElementById("timer-minutes").value;
+    let s = +document.getElementById("timer-seconds").value;
+
+    time = h*3600 + m*60 + s;
+
+    running = true;
+
+    t = setInterval(run, 1000);
+}
+
+function run() {
+    if (time <= 0) {
+        clearInterval(t);
+        running = false;
+        alert("Time Up!");
+        return;
     }
-    interval = setInterval (() => {
-        time -= 1000;
-         let total = time / 1000;
-        let hours = Math.floor(total / 3600);
-        let minutes = Math.floor((total % 3600) / 60);
-        let seconds = Math.floor(total % 60);
 
-        //format
-          document.getElementById("timer-time").innerText =
-            String(hours).padStart(2, "0") + ":" +
-            String(minutes).padStart(2, "0") + ":" +
-            String(seconds).padStart(2, "0");
+    time--;
 
-            if (time <= 0) {
-            clearInterval(interval);
-            alert("Time Up!");
-        }
-    }, 1000);
+    let hh = String(Math.floor(time/3600)).padStart(2,"0");
+    let mm = String(Math.floor((time%3600)/60)).padStart(2,"0");
+    let ss = String(time%60).padStart(2,"0");
+
+    document.getElementById("timer-time").innerText = hh+":"+mm+":"+ss;
 }
 
 function pause() {
-    clearInterval(interval);
+    if (running) {
+        clearInterval(t);
+        running = false;
+    } else {
+        running = true;
+        t = setInterval(run, 1000);
+    }
 }
 
+function reset() {
+    clearInterval(t);
+    running = false;
+    time = 0;
+    document.getElementById("timer-time").innerText = "00:00:00";
+}
