@@ -20,17 +20,28 @@ tabButtons.forEach(button => {
 let clockTime = document.getElementById('clock-time');
 let clockDate = document.getElementById('clock-date');
 let period = document.getElementById('clock-period');
-let timeformat = document.getElementById('timeformat');
+let timeformat = document.getElementById('format-toogle');
 function storeTime(){
     let timeDate = ((new Date()).toString());
     let time = timeDate.slice(16,24);
     let date = timeDate.slice(0,15);
-    let hour = timeDate.slice(16,17);
-    (hour>12) ? "PM" : "AM";
+    let hour = timeDate.slice(16,18);
+    
+    if(!timeformat){
+    if(hour>=12){ 
+        period.innerText = "PM";
+        if(hour>=13){hour = hour-12 }
+        time = hour + time.slice(2);
+         
+    }else{
+         period.innerText = "AM";
+    }
+}else{
+    period.innerText = " ";
+}
     clockTime.innerText = time;
     clockDate.innerText = date;
 
 }
 setInterval(storeTime,1000);
-
 
