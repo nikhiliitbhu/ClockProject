@@ -15,14 +15,10 @@ function updateClock() {
 
 setInterval(updateClock, 1000);
 
-    if (h >= 12) {
-        period = "PM";
-    }
-    else(period ="AM");
-        
-    
-
     // 12 hour format
+    if(document.getElementById("format-toggle").checked){
+        (document.getElementById("clock-period")=null)
+    }else{
     if (!formatToggle.checked) {
         if (h > 12) {
             h = h - 12;
@@ -31,6 +27,7 @@ setInterval(updateClock, 1000);
             h = 12;
         }
     }
+}
 
 // STOPWATCH 
 let swDisplay = document.getElementById("stopwatch");
