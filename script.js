@@ -113,6 +113,7 @@ stopwatchReset.addEventListener('click', function() {
     sec = "00";
     min = "00";
     stopwatchId = null;
+    lapList.innerHTML = null;
 });
 
 function stopwatch() {
@@ -145,32 +146,13 @@ function lap(){
 }
 
 function printLapList(){
-    let lapData = "<table><th><td>Index></td> <td>Lap Time</td></th>";
+    let lapData = "<table><th><td>Index</td> <td>Lap Time</td></th>";
     for(let i = 0; i < stopwatchData.length; i++){
-        lapData += '<tr> <td>i</td> <td> stopwatchData[i] </td> </tr> '
+        lapData += `<tr> <td> ${i}</td> <td> ${stopwatchData[i]} </td> </tr>`
     }
     lapData += '</table>';
     lapList.innerHTML = lapData;
 }
-
-
-
-{/* <table>
-    <th>
-        <td
-    </th>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-    </tr>
-</table> */}
-
-
-
-
 
 
 
