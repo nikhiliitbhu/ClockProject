@@ -99,7 +99,6 @@ stopwatchPause.addEventListener('click', function() {
     clearInterval(stopwatchId); // Stopwatch ko pause karta hai
      if (stopwatchId !== null){
         stopwatchId = null; // Agar stopwatch already chal raha hai to 
-        (stopwatchPause.textContent == "play") ? (stopwatchPause.textContent = "pause") : (stopwatchPause.textContent = "play"); // Pause button ka text change karta hai
     }else { 
         
     stopwatchId = setInterval(stopwatch, 10);
@@ -134,6 +133,53 @@ function stopwatch() {
     stopwatchTime.textContent = `${minString}:${secString}:${mSecString}`; // Stopwatch time ko display karta hai
 
 }
+
+//stopwach LAP
+
+let stopwatchData = [];
+let lapList = document.getElementById('lap-list');
+
+function lap(){
+    stopwatchData.push(stopwatchTime.innerText);
+    printLapList();
+}
+
+function printLapList(){
+    let lapData = "<table><th><td>Index></td> <td>Lap Time</td></th>";
+    for(let i = 0; i < stopwatchData.length; i++){
+        lapData += '<tr> <td>i</td> <td> stopwatchData[i] </td> </tr> '
+    }
+    lapData += '</table>';
+    lapList.innerText = lapData;
+}
+
+
+
+{/* <table>
+    <th>
+        <td
+    </th>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+</table> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Timer functionality
 
