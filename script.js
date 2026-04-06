@@ -118,10 +118,10 @@ stopwatchReset.addEventListener('click', function() {
 function stopwatch() {
     mSec++;
     if (mSec == 100) {
-        mSec = "00";
+        mSec = "0";
         sec++;
         if (sec == 60) {
-            sec = "00";
+            sec = "0";
             min++;
         }
     }
