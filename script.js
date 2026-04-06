@@ -150,7 +150,7 @@ function printLapList(){
         lapData += '<tr> <td>i</td> <td> stopwatchData[i] </td> </tr> '
     }
     lapData += '</table>';
-    lapList.innerText = lapData;
+    lapList.innerHTML = lapData;
 }
 
 
