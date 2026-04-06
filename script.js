@@ -17,6 +17,9 @@ tabButtons.forEach(button => {
         document.getElementById(tabName).classList.add('active');
     });
 });
+
+// CLOCK JS
+
 let clockTime = document.getElementById('clock-time');
 let clockDate = document.getElementById('clock-date');
 let period = document.getElementById('clock-period');
@@ -39,9 +42,54 @@ function storeTime(){
 }else{
     period.innerText = " ";
 }
+
     clockTime.innerText = time;
     clockDate.innerText = date;
 
 }
 setInterval(storeTime,1000);
+
+
+// TIMER JS
+let t, sec = 0;
+
+let d = document.getElementById("timer-time");
+
+function startTimer() {
+    if (t) return;
+
+    if (!sec) {
+        sec =
+            (timer-hours.value * 3600) +
+            (timer-minutes.value * 60) +
+            (+timer-seconds.value);
+    }
+
+    t = setInterval(() => {
+        if (sec <= 0) return clearInterval(t);
+
+        sec--;
+
+        let h = Math.floor(sec / 3600);
+        let m = Math.floor(sec % 3600 / 60);
+        let s = sec % 60;
+
+        d.innerText =
+            String(h).padStart(2, "0") + ":" +
+            String(m).padStart(2, "0") + ":" +
+            String(s).padStart(2, "0");
+
+    }, 1000);
+}
+
+function pauseTimer() {
+    clearInterval(t);
+    t = null;
+}
+
+function resetTimer() {
+    pauseTimer();
+    sec = 0;
+    d.innerText = "00:00:00";
+}
 
