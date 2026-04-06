@@ -85,9 +85,9 @@ let t;
 let time = 0;
 let running = false;
 
-function start() {
+function startTimer() {
     if (running) return;
-
+//timer ko miliseconds mai change karta hai
     let h = +document.getElementById("timer-hours").value;
     let m = +document.getElementById("timer-minutes").value;
     let s = +document.getElementById("timer-seconds").value;
@@ -116,7 +116,7 @@ function run() {
     document.getElementById("timer-time").innerText = hh+":"+mm+":"+ss;
 }
 
-function pause() {
+function pauseTimer() {
     if (running) {
         clearInterval(t);
         running = false;
@@ -126,7 +126,7 @@ function pause() {
     }
 }
 
-function reset() {
+function resetTimer() {
     clearInterval(t);
     running = false;
     time = 0;
