@@ -1,6 +1,8 @@
 // = CLOCK 
 let clocktime = document.getElementById("clock-time");
 let clockdate = document.getElementById("clock-date");
+let period= document.getElementById("clock-period");
+let timeformat= document.getElementById("format-toggle");
 
 function updateClock() {
     let now = new Date();
@@ -13,11 +15,12 @@ function updateClock() {
 
 setInterval(updateClock, 1000);
 
-let  period = "AM";
-
     if (h >= 12) {
         period = "PM";
     }
+    else(period ="AM");
+        
+    
 
     // 12 hour format
     if (!formatToggle.checked) {
