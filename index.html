@@ -48,9 +48,9 @@
                     <input type="number" id="timer-seconds" min="0" max="59" placeholder="SS" value="0">
                 </div>
                 <div class="controls">
-                    <button class="btn btn-primary" id="timer-start">Start</button>
-                    <button class="btn btn-pause" id="timer-pause">Pause</button>
-                    <button class="btn btn-reset" id="timer-reset">Reset</button>
+                    <button class="btn btn-primary" id="timer-start" onclick="startTimer()">Start</button>
+                    <button class="btn btn-pause" id="timer-pause" onclick="pauseTimer()" disabled>Pause</button>
+                    <button class="btn btn-reset" id="timer-reset" onclick="resetTimer()" disabled>Reset</button>
                 </div>
             </div>
 

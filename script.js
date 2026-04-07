@@ -99,3 +99,64 @@ function lap(){
 
     lapList.innerHTML = lapTable;
 }
+
+
+//TIMER FUNCATIONALITY
+
+let timerDisplay = document.getElementById("timer-time");
+let timerHours = document.getElementById("timer-hours");
+let timerMinutes = document.getElementById("timer-minutes");
+let timerSeconds = document.getElementById("timer-seconds");
+
+let timerPauseBtn = document.getElementById("timer-pause");
+let timerResetBtn = document.getElementById("timer-reset");
+let timerStartBtn = document.getElementById("timer-start");
+
+let endTime;
+
+function startTimer(){
+    endTime = Date.now() + (parseInt(timerHours.value)*3600000 + parseInt(timerMinutes.value)*60000 + parseInt(timerSeconds.value)*1000);
+    id = setInterval(updateTimer, 200);
+
+    timerPauseBtn.disabled = false;
+    timerResetBtn.disabled = false;
+    timerStartBtn.disabled = true;
+
+}
+
+function updateTimer(){
+    let timeLeft = endTime - Date.now();
+    if(timeLeft <= 0){
+        clearInterval(id);
+        resetTimer();
+        new Audio('alarm.mp3').play();
+        alert("Time's up!");
+
+        return;
+    }
+    let hours = Math.floor(timeLeft / 3600000);
+    let minutes = Math.floor((timeLeft % 3600000) / 60000);
+    let seconds = Math.floor((timeLeft % 60000) / 1000);
+    timerDisplay.innerText = formatTwoDigits(hours) + ":" + formatTwoDigits(minutes) + ":" + formatTwoDigits(seconds);
+}
+
+function pauseTimer(){
+    if(timerPauseBtn.innerText === "PAUSE"){
+        clearInterval(id);
+        timerPauseBtn.innerText = "PLAY";
+        timerPauseBtn.style.backgroundColor = "green";
+    } else {
+        endTime = Date.now() + (parseInt(timerHours.value)*3600000 + parseInt(timerMinutes.value)*60000 + parseInt(timerSeconds.value)*1000);
+        id = setInterval(updateTimer, 500);
+        timerPauseBtn.innerText = "PAUSE";
+        timerPauseBtn.style.backgroundColor = "#FFA500";
+    }   
+}
+
+function resetTimer(){
+    timerDisplay.innerText = "00:00:00";
+
+    timerPauseBtn.disabled = true;
+    timerResetBtn.disabled = true;
+    timerStartBtn.disabled = false;
+}
