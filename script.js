@@ -43,13 +43,17 @@ function startStopwatch(){
 
 function updateStopwatch(){
     let ms = Date.now() - start;
-    let currentStopwatchTime = Math.floor(ms/3600000);
-    ms -= currentStopwatchTime*3600000;
-    currentStopwatchTime += ":" + Math.floor(ms/60000) + ":";
+    currentStopwatchTime = formatTwoDigits(Math.floor(ms/3600000));
+    ms -= Math.floor(ms/3600000)*3600000;
+    currentStopwatchTime += ":" + formatTwoDigits(Math.floor(ms/60000)) + ":";
     ms -= Math.floor(ms/60000)*60000;
-    currentStopwatchTime += Math.floor(ms/1000);
+    currentStopwatchTime += formatTwoDigits(Math.floor(ms/1000));
 
     display.innerText = currentStopwatchTime;
+}
+
+function formatTwoDigits(num) {
+  return num < 10 ? '0' + num : num;
 }
 
 function resetStopwatch(){
