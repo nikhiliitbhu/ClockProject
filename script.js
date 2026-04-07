@@ -28,7 +28,7 @@ let resetBtn = document.getElementById('stopwatch-reset');
 let lapBtn = document.getElementById('stopwatch-lap');
 let lapList = document.getElementById('lap-list');
 
-let start = null, id;
+let start = null, id, stopwatchRefreshRate = 500;
 let lapData = [];
 
 function startStopwatch(){
@@ -38,7 +38,7 @@ function startStopwatch(){
     lapBtn.disabled = false;
 
     start = Date.now();
-    id = setInterval(updateStopwatch, 1000);
+    id = setInterval(updateStopwatch, stopwatchRefreshRate);
 }
 
 function updateStopwatch(){
@@ -78,7 +78,7 @@ function pauseStopwatch(){
 
     } else {
         start += Date.now() - pauseTime;
-        id = setInterval(updateStopwatch, 1000);
+        id = setInterval(updateStopwatch, stopwatchRefreshRate);
         pauseBtn.innerText = "PAUSE";
         pauseBtn.style.backgroundColor = "#FFA500";
 
