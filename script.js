@@ -61,6 +61,8 @@ function resetStopwatch(){
     display.innerText = "00:00:00";
     lapList.innerHTML = null;
     lapData = [];
+    pauseBtn.innerText = "PAUSE";
+    pauseBtn.style.backgroundColor = "#FFA500";
 
     startBtn.disabled = false;
     pauseBtn.disabled = true;
