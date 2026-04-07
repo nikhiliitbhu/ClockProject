@@ -56,6 +56,7 @@ function resetStopwatch(){
     clearInterval(id);
     display.innerText = "00:00:00";
     lapList.innerHTML = null;
+    lapData = [];
 
     startBtn.disabled = false;
     pauseBtn.disabled = true;
