@@ -154,6 +154,7 @@ function pauseTimer(){
 }
 
 function resetTimer(){
+    clearInterval(id);
     timerDisplay.innerText = "00:00:00";
 
     timerPauseBtn.disabled = true;
