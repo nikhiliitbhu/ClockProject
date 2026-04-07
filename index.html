@@ -60,12 +60,12 @@
                     <div class="time" id="stopwatch-time">00:00:00</div>
                 </div>
                 <div class="controls">
-                    <button class="btn btn-primary" id="stopwatch-start">Start</button>
-                    <button class="btn btn-pause" id="stopwatch-pause">Pause</button>
-                    <button class="btn btn-reset" id="stopwatch-reset">Reset</button>
+                    <button class="btn btn-primary" id="stopwatch-start" onclick="startStopwatch()">Start</button>
+                    <button class="btn btn-pause" id="stopwatch-pause" onclick="pauseStopwatch()" disabled>Pause</button>
+                    <button class="btn btn-reset" id="stopwatch-reset" onclick="resetStopwatch()" disabled>Reset</button>
                 </div>
                 <div class="laps">
-                    <button class="btn btn-secondary" id="stopwatch-lap">Lap</button>
+                    <button class="btn btn-secondary" id="stopwatch-lap" disabled onclick="lap()">Lap</button>
                 </div>
                 <div class="lap-list" id="lap-list"></div>
             </div>
