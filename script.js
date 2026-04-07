@@ -162,3 +162,50 @@ function resetTimer(){
     timerResetBtn.disabled = true;
     timerStartBtn.disabled = false;
 }
+
+
+//CLOCK FUNCTIONALITY
+
+let clockTime = document.getElementById('clock-time');
+let clockDate = document.getElementById('clock-date');
+let clockPeriod = document.getElementById('clock-period');
+let formatToggle = document.getElementById('format-toggle');
+
+let is24Hour = false;
+
+function updateClock() {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+    
+    // Format date
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    clockDate.innerText = now.toLocaleDateString('en-US', options);
+    
+    if (is24Hour) {
+        // 24-hour format
+        clockTime.innerText = formatTwoDigits(hours) + ":" + formatTwoDigits(minutes) + ":" + formatTwoDigits(seconds);
+        clockPeriod.style.display = 'none';
+    } else {
+        // 12-hour format
+        let period = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // Convert 0 to 12 for 12 AM
+        clockTime.innerText = formatTwoDigits(hours) + ":" + formatTwoDigits(minutes) + ":" + formatTwoDigits(seconds);
+        clockPeriod.innerText = period;
+        clockPeriod.style.display = 'block';
+    }
+}
+
+function toggleFormat() {
+    is24Hour = formatToggle.checked;
+    updateClock();
+}
+
+// Start the clock and update every second
+updateClock();
+setInterval(updateClock, 1000);
+
+// Add event listener to the checkbox
+formatToggle.addEventListener('change', toggleFormat);
