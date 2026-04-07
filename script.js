@@ -112,7 +112,7 @@ let timerPauseBtn = document.getElementById("timer-pause");
 let timerResetBtn = document.getElementById("timer-reset");
 let timerStartBtn = document.getElementById("timer-start");
 
-let endTime;
+let endTime, pauseTime;
 
 function startTimer(){
     endTime = Date.now() + (parseInt(timerHours.value)*3600000 + parseInt(timerMinutes.value)*60000 + parseInt(timerSeconds.value)*1000);
@@ -142,11 +142,12 @@ function updateTimer(){
 
 function pauseTimer(){
     if(timerPauseBtn.innerText === "PAUSE"){
+        pauseTime = Date.now();
         clearInterval(id);
         timerPauseBtn.innerText = "PLAY";
         timerPauseBtn.style.backgroundColor = "green";
     } else {
-        endTime = Date.now() + (parseInt(timerHours.value)*3600000 + parseInt(timerMinutes.value)*60000 + parseInt(timerSeconds.value)*1000);
+        endTime += Date.now() - pauseTime;
         id = setInterval(updateTimer, 500);
         timerPauseBtn.innerText = "PAUSE";
         timerPauseBtn.style.backgroundColor = "#FFA500";
