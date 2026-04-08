@@ -1,9 +1,12 @@
 // Get all tab buttons and tab panes
-const tabButtons = document.querySelectorAll('tab-button');
-const tabPanes = document.querySelectorAll('tab-pane');
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabPanes = document.querySelectorAll('.tab-pane');
 const clocktime =document.getElementById('clock-time');
 const clockdate =document.getElementById('clock-date');
-
+const clockhour=document.getElementById('format-toggle');
+const format = document.getElementById('clock-period')
+// //  const clocktimer =document.getElementById('clock-timer');
+ 
 
 // Add click event listener to each tab button
 tabButtons.forEach(button => {
@@ -23,8 +26,39 @@ tabButtons.forEach(button => {
 
 function updatetime(){
     let timedate=(new Date()).toString()
-    clocktime.innerText=timedate.slice(16,24)
+    clocktime.innerText = timedate.slice(16,24)
     clockdate.innerText=timedate.slice(0,15)
+    let now = new Date();
+    let hour = now.getHours();
+
+     if(hour >= 12){
+        format.innerText="pm"
+        if(clockhour>13){
+           hour.innerText = hour.slice(2)
+     }
+    }
+else{
+
+     format.innerText="am"
+    }
+     
 }
 setInterval(updatetime,1000);
-updatetime();
+ updatetime();
+  
+
+
+
+//   let time = 10;
+//   let timer=setInterval(timer)(()=>{
+//     console.log(time);
+//     time--;
+//     if(time<0){
+//         clearInterval(time);
+//         alert("time,s up!");
+//     }
+//   },1000)
+
+
+
+  
