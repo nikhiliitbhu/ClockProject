@@ -51,9 +51,9 @@
                     <input type="number" id="timer-seconds" min="0" max="59" placeholder="SS" value="0">
                 </div>
                 <div class="controls">
-                    <button class="btn btn-primary" id="timer-start">Start</button>
-                    <button class="btn btn-pause" id="timer-pause">Pause</button>
-                    <button class="btn btn-reset" id="timer-reset">Reset</button>
+                    <button class="btn btn-primary" id="timer-start" onclick="startTimer()">Start</button>
+                    <button class="btn btn-pause" id="timer-pause" onclick="pauseTimer()" >Pause</button>
+                    <button class="btn btn-reset" id="timer-reset" onclick=" resetTimer()">Reset</button>
                 </div>
             </div>
 
@@ -63,12 +63,12 @@
                     <div class="time" id="stopwatch-time">00:00:00</div>
                 </div>
                 <div class="controls">
-                    <button class="btn btn-primary" id="stopwatch-start">Start</button>
-                    <button class="btn btn-pause" id="stopwatch-pause">Pause</button>
-                    <button class="btn btn-reset" id="stopwatch-reset">Reset</button>
+                    <button class="btn btn-primary" id="stopwatch-start" onclick="startStopwatch()">Start</button>
+                    <button class="btn btn-pause" id="stopwatch-pause" onclick="pauseStopwatch()">Pause</button>
+                    <button class="btn btn-reset" id="stopwatch-reset" onclick="resetStopwatch()">Reset</button>
                 </div>
                 <div class="laps">
-                    <button class="btn btn-secondary" id="stopwatch-lap">Lap</button>
+                    <button class="btn btn-secondary" id="stopwatch-lap" onclick="lap()">Lap</button>
                 </div>
                 <div class="lap-list" id="lap-list"></div>
             </div>

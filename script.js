@@ -117,7 +117,7 @@ let endTime, pauseTime;
 function startTimer(){
     endTime = Date.now() + (parseInt(timerHours.value)*3600000 + parseInt(timerMinutes.value)*60000 + parseInt(timerSeconds.value)*1000);
     id = setInterval(updateTimer, 200);
-    timerSrartBtn.enabled  = true;
+
     timerPauseBtn.disabled = false;
     timerResetBtn.disabled = false;
     timerStartBtn.disabled = true;
@@ -130,7 +130,7 @@ function updateTimer(){
         clearInterval(id);
         resetTimer();
         new Audio('loswin23-morning-birds-chirping-499430.mp3').play();
-        alert("Time's up!");
+        alert("Congrats Time's up!");
 
         return;
     }
