@@ -51,45 +51,162 @@ setInterval(storeTime,1000);
 
 
 // TIMER JS
-let t, sec = 0;
+let display1 = document.getElementById("timer-time");
 
-let d = document.getElementById("timer-time");
+let hrsInput = document.getElementById("timer-hours");
+let minsInput = document.getElementById("timer-minutes");
+let secsInput = document.getElementById("timer-seconds");
 
-function startTimer() {
-    if (t) return;
+let startBtn1 = document.getElementById("timer-start");
+let pauseBtn1 = document.getElementById("timer-pause");
+let resetBtn1 = document.getElementById("timer-reset");
 
-    if (!sec) {
-        sec =
-            (timer-hours.value * 3600) +
-            (timer-minutes.value * 60) +
-            (+timer-seconds.value);
+let totalTime = 0;
+let interval;
+let running = false;
+
+// format
+function format(num){
+    return num < 10 ? "0" + num : num;
+}
+
+// update display
+function updateDisplay(){
+    let h = Math.floor(totalTime / 3600);
+    let m = Math.floor((totalTime % 3600) / 60);
+    let s = totalTime % 60;
+
+    display.innerText = `${format(h)}:${format(m)}:${format(s)}`;
+}
+
+// START
+function startTimer(){
+    if(!running){
+        // input se total seconds
+        if(totalTime === 0){
+            totalTime =
+                parseInt(hrsInput.value || 0) * 3600 +
+                parseInt(minsInput.value || 0) * 60 +
+                parseInt(secsInput.value || 0);
+        }
+
+        if(totalTime <= 0) return;
+
+        running = true;
+
+        interval = setInterval(()=>{
+            totalTime--;
+            updateDisplay();
+
+            if(totalTime <= 0){
+                clearInterval(interval);
+                running = false;
+                alert("⏰ Time's up!");
+            }
+        },1000);
+    }
+}
+
+// PAUSE
+function pauseTimer(){
+    clearInterval(interval);
+    running = false;
+}
+
+// RESET
+function resetTimer(){
+    clearInterval(interval);
+    totalTime = 0;
+    running = false;
+
+    display.innerText = "00:00:00";
+
+    hrsInput.value = 0;
+    minsInput.value = 0;
+    secsInput.value = 0;
+}
+
+//STOPWATCH
+
+let display = document.getElementById('stopwatch-time');
+let pauseBtn = document.getElementById('stopwatch-pause');
+let startBtn = document.getElementById('stopwatch-start');
+let resetBtn = document.getElementById('stopwatch-reset');
+let lapBtn = document.getElementById('stopwatch-lap');
+let lapList = document.getElementById('lap-list');
+
+let start = null, id, pauseTime = 0;
+let stopwatchRefreshRate = 500;
+let lapData = [];
+
+// START
+function startStopwatch(){
+    startBtn.disabled = true;
+    pauseBtn.disabled = false;
+    resetBtn.disabled = false;
+    lapBtn.disabled = false;
+
+    start = Date.now();
+    id = setInterval(updateStopwatch, stopwatchRefreshRate);
+}
+
+// UPDATE
+function updateStopwatch(){
+    let ms = Date.now() - start;
+
+    let hrs = Math.floor(ms/3600000);
+    ms %= 3600000;
+
+    let mins = Math.floor(ms/60000);
+    ms %= 60000;
+
+    let secs = Math.floor(ms/1000);
+
+    let time = format(hrs) + ":" + format(mins) + ":" + format(secs);
+    display.innerText = time;
+}
+
+// FORMAT
+function format(num){
+    return num < 10 ? '0' + num : num;
+}
+
+// RESET
+function resetStopwatch(){
+    clearInterval(id);
+    display.innerText = "00:00:00";
+    lapList.innerHTML = "";
+    lapData = [];
+
+    startBtn.disabled = false;
+    pauseBtn.disabled = true;
+    resetBtn.disabled = true;
+    lapBtn.disabled = true;
+
+    pauseBtn.innerText = "Pause";
+    pauseBtn.style.backgroundColor = "";
+}
+
+// PAUSE / RESUME
+function pauseStopwatch(){ if(pauseBtn.innerText === "PAUSE"){ clearInterval(id); pauseTime = Date.now(); pauseBtn.innerText = "PLAY"; pauseBtn.style.backgroundColor = "green"; } else { start += Date.now() - pauseTime; id = setInterval(updateStopwatch, stopwatchRefreshRate); pauseBtn.innerText = "PAUSE"; pauseBtn.style.backgroundColor = "#FFA500"; } }
+    
+
+// LAP
+function lap(){
+    lapData.push(display.innerText);
+
+    let html = "<table><tr><th>#</th><th>Time</th></tr>";
+
+    for(let i = lapData.length-1; i >= 0; i--){
+        html += `<tr><td>${i+1}</td><td>${lapData[i]}</td></tr>`;
     }
 
-    t = setInterval(() => {
-        if (sec <= 0) return clearInterval(t);
-
-        sec--;
-
-        let h = Math.floor(sec / 3600);
-        let m = Math.floor(sec % 3600 / 60);
-        let s = sec % 60;
-
-        d.innerText =
-            String(h).padStart(2, "0") + ":" +
-            String(m).padStart(2, "0") + ":" +
-            String(s).padStart(2, "0");
-
-    }, 1000);
+    html += "</table>";
+    lapList.innerHTML = html;
 }
 
-function pauseTimer() {
-    clearInterval(t);
-    t = null;
-}
-
-function resetTimer() {
-    pauseTimer();
-    sec = 0;
-    d.innerText = "00:00:00";
-}
-
+// EVENTS
+startBtn.onclick = startStopwatch;
+pauseBtn.onclick = pauseStopwatch;
+resetBtn.onclick = resetStopwatch;
+lapBtn.onclick = lap;
