@@ -50,81 +50,75 @@ function storeTime(){
 setInterval(storeTime,1000);
 
 
-// TIMER JS
-let display1 = document.getElementById("timer-time");
+// // TIMER JS
+// let timerDisplay = document.getElementById("timer-time");
+// let timerHours = document.getElementById("timer-hours");
+// let timerMinutes = document.getElementById("timer-minutes");
+// let timerSeconds = document.getElementById("timer-seconds");
 
-let hrsInput = document.getElementById("timer-hours");
-let minsInput = document.getElementById("timer-minutes");
-let secsInput = document.getElementById("timer-seconds");
+// let timerPauseBtn = document.getElementById("timer-pause");
+// let timerResetBtn = document.getElementById("timer-reset");
+// let timerStartBtn = document.getElementById("timer-start");
 
-let startBtn1 = document.getElementById("timer-start");
-let pauseBtn1 = document.getElementById("timer-pause");
-let resetBtn1 = document.getElementById("timer-reset");
+// let endTime, pausetime, id;
 
-let totalTime = 0;
-let interval;
-let running = false;
+// function startTimer() {
+//     let h = parseInt(timerHours.value) || 0;
+//     let m = parseInt(timerMinutes.value) || 0;
+//     let s = parseInt(timerSeconds.value) || 0;
 
-// format
-function format(num){
-    return num < 10 ? "0" + num : num;
-}
+//     endTime = Date.now() + (h*3600000 + m*60000 + s*1000);
 
-// update display
-function updateDisplay(){
-    let h = Math.floor(totalTime / 3600);
-    let m = Math.floor((totalTime % 3600) / 60);
-    let s = totalTime % 60;
+//     updateTimer(); // instant update
+//     id = setInterval(updateTimer, 200);
 
-    display.innerText = `${format(h)}:${format(m)}:${format(s)}`;
-}
+//     timerPauseBtn.disabled = false;
+//     timerResetBtn.disabled = false;
+//     timerStartBtn.disabled = true;
+// }
 
-// START
-function startTimer(){
-    if(!running){
-        // input se total seconds
-        if(totalTime === 0){
-            totalTime =
-                parseInt(hrsInput.value || 0) * 3600 +
-                parseInt(minsInput.value || 0) * 60 +
-                parseInt(secsInput.value || 0);
-        }
+// function updateTimer() {
+//     let timeLeft = endTime - Date.now();
 
-        if(totalTime <= 0) return;
+//     if (timeLeft <= 0) {
+//         clearInterval(id);
+//         resetTimer();
+//         // new Audio('alarm.mp3').play();
+//         // alert("Time's up!");
+//         // return;
+//     }
 
-        running = true;
+//     let h = Math.floor(timeLeft / 3600000);
+//     let m = Math.floor((timeLeft % 3600000) / 60000);
+//     let s = Math.floor((timeLeft % 60000) / 1000);
 
-        interval = setInterval(()=>{
-            totalTime--;
-            updateDisplay();
+//     timerDisplay.innerText = format(h) + ":" + format(m) + ":" + format(s);
+// }
 
-            if(totalTime <= 0){
-                clearInterval(interval);
-                running = false;
-                alert("⏰ Time's up!");
-            }
-        },1000);
-    }
-}
+// function pausetimer() {
+//     if (timerPauseBtn.innerText === "PAUSE") {
+//         pauseTime = Date.now();
+//         clearInterval(id);
+//         timerPauseBtn.innerText = "PLAY";
+//     } else {
+//         endTime += Date.now() - pauseTime;
+//         id = setInterval(updateTimer, 200);
+//         timerPauseBtn.innerText = "PAUSE";
+//     }
+// }
 
-// PAUSE
-function pauseTimer(){
-    clearInterval(interval);
-    running = false;
-}
+// function resetTimer() {
+//     clearInterval(id);
+//     timerDisplay.innerText = "00:00:00";
 
-// RESET
-function resetTimer(){
-    clearInterval(interval);
-    totalTime = 0;
-    running = false;
+//     timerPauseBtn.disabled = true;
+//     timerResetBtn.disabled = true;
+//     timerStartBtn.disabled = false;
+// }
 
-    display.innerText = "00:00:00";
-
-    hrsInput.value = 0;
-    minsInput.value = 0;
-    secsInput.value = 0;
-}
+// function format(num) {
+//     return num < 10 ? "0" + num : num;
+// }
 
 //STOPWATCH
 
