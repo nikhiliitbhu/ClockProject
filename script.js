@@ -39,40 +39,163 @@ setInterval(updateClock, 1000);
 
 // timer //
 
-let store1 =document.getElementById("timer-start");
-let store2 =document.getElementById("timer-stop");
-let store3 =document.getElementById("timer-reset");
+const timerStartBtn = document.getElementById("timer-start");
+const timerPauseBtn = document.getElementById("timer-pause");
+const timerResetBtn = document.getElementById("timer-reset");
+const timerHoursInput = document.getElementById("timer-hours");
+const timerMinutesInput = document.getElementById("timer-minutes");
+const timerSecondsInput = document.getElementById("timer-seconds");
+const timerDisplay = document.getElementById("timer-time");
 
 let countdown;
+let timerRemainingSeconds = 0;
+let timerPaused = false;
 
-function timerstart(){
-    store1.style.display ="none";
-    store2.style.display = "inline-block";
-    store3.style.display ="inlineblock";
-    
-    startcountdown();
+function pad(value) {
+    return value.toString().padStart(2, '0');
 }
-function startcountdown(){
-    let hours = parseFloat(document.getElementById("timer-start").value) || 0;
-    let minutes = parseFloat(document.getElementById("timer-stop").value) || 0;
-    let seconds = parseFloat(document.getElementById("timer-reset").value) || 0;
-      
 
-    let totalsecond = hours * 3600 + minutes * 60 + seconds;
-countdown= setInterval(() => {
-        if(totalsecond => 0){
+function updateTimerDisplay(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    timerDisplay.textContent = `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
+}
+
+function validateTimerInput(id) {
+    const input = document.getElementById(id);
+    let value = parseInt(input.value, 10);
+    if (Number.isNaN(value) || value < 0) value = 0;
+    if (id === 'timer-hours') {
+        value = Math.min(value, 23);
+    } else {
+        value = Math.min(value, 59);
+    }
+    input.value = value;
+}
+
+function startTimerInterval() {
+    clearInterval(countdown);
+    countdown = setInterval(() => {
+        if (timerRemainingSeconds <= 0) {
             clearInterval(countdown);
+            timerPaused = false;
+            timerPauseBtn.textContent = 'Pause';
             return;
         }
+        timerRemainingSeconds -= 1;
+        updateTimerDisplay(timerRemainingSeconds);
+    }, 1000);
+}
 
-    totalsecond--;
+function timerstart() {
+    if (countdown) {
+        clearInterval(countdown);
+    }
 
-    let h =Math.floor(totalsecond / 3600);
-    let m =Math.floor((totalsecond % 3600) /60 );
-    let s =Math.floor(totalsecond % 60);
+    timerRemainingSeconds =
+        (parseInt(timerHoursInput.value, 10) || 0) * 3600 +
+        (parseInt(timerMinutesInput.value, 10) || 0) * 60 +
+        (parseInt(timerSecondsInput.value, 10) || 0);
 
-    document.getElementById("timer-time").textContent =
-    '${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    timerRemainingSeconds = Math.max(timerRemainingSeconds, 0);
+    updateTimerDisplay(timerRemainingSeconds);
 
-, 1000})
-}   ;
+    if (timerRemainingSeconds === 0) {
+        return;
+    }
+
+    timerPaused = false;
+    timerPauseBtn.textContent = 'Pause';
+    startTimerInterval();
+}
+
+function timerpause() {
+    if (!countdown) {
+        return;
+    }
+
+    if (!timerPaused) {
+        clearInterval(countdown);
+        timerPaused = true;
+        timerPauseBtn.textContent = 'Resume';
+    } else {
+        timerPaused = false;
+        timerPauseBtn.textContent = 'Pause';
+        startTimerInterval();
+    }
+}
+
+function timerreset() {
+    clearInterval(countdown);
+    countdown = null;
+    timerPaused = false;
+    timerPauseBtn.textContent = 'Pause';
+    timerRemainingSeconds = 0;
+    updateTimerDisplay(0);
+    timerHoursInput.value = 0;
+    timerMinutesInput.value = 0;
+    timerSecondsInput.value = 0;
+}
+
+function updateTimer() {
+    if (!countdown) {
+        const remainingSeconds =
+            (parseInt(timerHoursInput.value, 10) || 0) * 3600 +
+            (parseInt(timerMinutesInput.value, 10) || 0) * 60 +
+            (parseInt(timerSecondsInput.value, 10) || 0);
+        updateTimerDisplay(remainingSeconds);
+    }
+}
+
+// stopwatch //
+
+const stopwatchDisplay = document.getElementById('stopwatch-time');
+let stopwatchInterval;
+let stopwatchElapsedSeconds = 0;
+let stopwatchRunning = false;
+
+function updateStopwatchDisplay(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    stopwatchDisplay.textContent = `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
+}
+
+function stopwatchstart() {
+    if (stopwatchRunning) {
+        return;
+    }
+    stopwatchRunning = true;
+    stopwatchInterval = setInterval(() => {
+        stopwatchElapsedSeconds += 1;
+        updateStopwatchDisplay(stopwatchElapsedSeconds);
+    }, 1000);
+}
+
+function stopwatchpause() {
+    clearInterval(stopwatchInterval);
+    stopwatchRunning = false;
+}
+
+function stopwatchreset() {
+    clearInterval(stopwatchInterval);
+    stopwatchRunning = false;
+    stopwatchElapsedSeconds = 0;
+    updateStopwatchDisplay(0);
+    document.getElementById('lap-list').textContent = '';
+}
+
+function stopwatchlap() {
+    if (!stopwatchRunning) {
+        return;
+    }
+    const lapList = document.getElementById('lap-list');
+    const lapItem = document.createElement('div');
+    lapItem.textContent = `${pad(Math.floor(stopwatchElapsedSeconds / 3600))}:${pad(Math.floor((stopwatchElapsedSeconds % 3600) / 60))}:${pad(stopwatchElapsedSeconds % 60)}`;
+    lapList.appendChild(lapItem);
+}
+
+function updateStopwatch() {
+    updateStopwatchDisplay(stopwatchElapsedSeconds);
+}
