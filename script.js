@@ -37,11 +37,10 @@ function updateTime(){
     if(hour>=13){
         hour = hour-12;
     }
-
+}
     time = hour + time.slice(2);
     clockPeriod.innerText="pm"
-}
-<<<<<<< HEAD
+} HEAD
 
 
 //TIMER FUNCATIONALITY
@@ -76,11 +75,11 @@ function updateTimer(){
         alert("Time's up!");
 
         return;
-=======
+
 else if(hour<12){
     clockPeriod.innerText="am"
 }
->>>>>>> a527742814af3aafbe9cc6145fa027aa055e7be0
+a527742814af3aafbe9cc6145fa027aa055e7be0
     }
     document.getElementById('clock-time').innerText= time;
 }
