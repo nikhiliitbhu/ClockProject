@@ -23,42 +23,41 @@ tabButtons.forEach(button => {
     });
 });
 
-
-function updatetime(){
-    let timedate=(new Date()).toString()
-    clocktime.innerText = timedate.slice(16,24)
-    clockdate.innerText=timedate.slice(0,15)
+function updatetime() {
     let now = new Date();
-    let hour = now.getHours();
 
-     if(hour >= 12){
-        format.innerText="pm"
-        if(clockhour>13){
-           hour.innerText = hour.slice(2)
-     }
-    }
-else{
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
 
-     format.innerText="am"
+    let period = "";
+
+    // Check if checkbox is checked
+    if (clockhour.checked) {
+        // 24-hour format
+        period = "";
+    } else {
+        // 12-hour format
+        period = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12;
+        hours = hours ? hours : 12;
     }
-     
+
+    // Leading zeros
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    // Display time
+    clocktime.innerText = `${hours}:${minutes}:${seconds}`;
+    format.innerText = period;
+
+    // Display date
+    clockdate.innerText = now.toDateString();
 }
-setInterval(updatetime,1000);
- updatetime();
-  
+clockhour.addEventListener("change", updatetime);
+setInterval(updatetime, 1000);
 
 
 
-//   let time = 10;
-//   let timer=setInterval(timer)(()=>{
-//     console.log(time);
-//     time--;
-//     if(time<0){
-//         clearInterval(time);
-//         alert("time,s up!");
-//     }
-//   },1000)
+// stopwatch
 
-
-
-  
