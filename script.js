@@ -118,11 +118,11 @@ function startTimer(){
     endTime = Date.now() + (parseInt(timerHours.value)*3600000 + parseInt(timerMinutes.value)*60000 + parseInt(timerSeconds.value)*1000);
     id = setInterval(updateTimer, 200);
 
-    timerPauseBtn.disabled = false;
+    timerPauseBtn.disabled = false; v
     timerResetBtn.disabled = false;
     timerStartBtn.disabled = true;
 
-}
+}  
 
 function updateTimer(){
     let timeLeft = endTime - Date.now();
