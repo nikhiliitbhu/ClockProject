@@ -19,86 +19,29 @@ tabButtons.forEach(button => {
 });
 
 
-//STOPWATCH
 
-let display = document.getElementById('stopwatch-time');
-let pauseBtn = document.getElementById('stopwatch-pause');
-let startBtn = document.getElementById('stopwatch-start');
-let resetBtn = document.getElementById('stopwatch-reset');
-let lapBtn = document.getElementById('stopwatch-lap');
-let lapList = document.getElementById('lap-list');
+function updateTime(){
+    let now = new Date();
+    let hour=now.getHours();
+    let minute=now.getMinutes();
+    let second=now.getSeconds();
 
-let start = null, id, stopwatchRefreshRate = 500;
-let lapData = [];
+    let clockPeriod = document.getElementById('clock-period');
+    let format = document.getElementById('format-toggle');
+    let time = hour +":"+ minute+":"+ second;
 
-function startStopwatch(){
-    startBtn.disabled = true;
-    pauseBtn.disabled = false;
-    resetBtn.disabled = false;
-    lapBtn.disabled = false;
-
-    start = Date.now();
-    id = setInterval(updateStopwatch, stopwatchRefreshRate);
-}
-
-function updateStopwatch(){
-    let ms = Date.now() - start;
-    currentStopwatchTime = formatTwoDigits(Math.floor(ms/3600000));
-    ms -= Math.floor(ms/3600000)*3600000;
-    currentStopwatchTime += ":" + formatTwoDigits(Math.floor(ms/60000)) + ":";
-    ms -= Math.floor(ms/60000)*60000;
-    currentStopwatchTime += formatTwoDigits(Math.floor(ms/1000));
-
-    display.innerText = currentStopwatchTime;
-}
-
-function formatTwoDigits(num) {
-  return num < 10 ? '0' + num : num;
-}
-
-function resetStopwatch(){
-    clearInterval(id);
-    display.innerText = "00:00:00";
-    lapList.innerHTML = null;
-    lapData = [];
-    pauseBtn.innerText = "PAUSE";
-    pauseBtn.style.backgroundColor = "#FFA500";
-
-    startBtn.disabled = false;
-    pauseBtn.disabled = true;
-    resetBtn.disabled = true;
-    lapBtn.disabled = true;
-}
-
-function pauseStopwatch(){
-
-    if(pauseBtn.innerText === "PAUSE"){
-        clearInterval(id);
-        pauseTime = Date.now();
-        pauseBtn.innerText = "PLAY";
-        pauseBtn.style.backgroundColor = "green";
-
+    if(format.checked){
+        clockPeriod.innerText= null
     } else {
-        start += Date.now() - pauseTime;
-        id = setInterval(updateStopwatch, stopwatchRefreshRate);
-        pauseBtn.innerText = "PAUSE";
-        pauseBtn.style.backgroundColor = "#FFA500";
-
-    }
-}
-
-function lap(){
-    lapData.push(display.innerText);
-    let lapTable = "<table>  <tr> <th> Index </th> <th> Record </th> </tr>  ";
-
-    for(let i = lapData.length-1; i >= 0 ; i--){ 
-        lapTable += `<tr> <td> ${i+1} </td> <td> ${lapData[i]} </td></tr>`;
+        if(hour>=12){
+    if(hour>=13){
+        hour = hour-12;
     }
 
-    lapTable += " </table>";
-
-    lapList.innerHTML = lapTable;
+    time = hour + time.slice(2);
+    clockPeriod.innerText="pm"
 }
+<<<<<<< HEAD
 
 
 //TIMER FUNCATIONALITY
@@ -133,79 +76,63 @@ function updateTimer(){
         alert("Time's up!");
 
         return;
+=======
+else if(hour<12){
+    clockPeriod.innerText="am"
+}
+>>>>>>> a527742814af3aafbe9cc6145fa027aa055e7be0
     }
-    let hours = Math.floor(timeLeft / 3600000);
-    let minutes = Math.floor((timeLeft % 3600000) / 60000);
-    let seconds = Math.floor((timeLeft % 60000) / 1000);
-    timerDisplay.innerText = formatTwoDigits(hours) + ":" + formatTwoDigits(minutes) + ":" + formatTwoDigits(seconds);
+    document.getElementById('clock-time').innerText= time;
 }
+setInterval(updateTime,1000);
+updateTime();
 
-function pauseTimer(){
-    if(timerPauseBtn.innerText === "PAUSE"){
-        pauseTime = Date.now();
-        clearInterval(id);
-        timerPauseBtn.innerText = "PLAY";
-        timerPauseBtn.style.backgroundColor = "green";
-    } else {
-        endTime += Date.now() - pauseTime;
-        id = setInterval(updateTimer, 500);
-        timerPauseBtn.innerText = "PAUSE";
-        timerPauseBtn.style.backgroundColor = "#FFA500";
-    }   
+
+function updateDate(){
+ let now= (new Date()).toString().slice(0,15);
+ document.getElementById("clock-date").innerText= now;
+ 
 }
-
-function resetTimer(){
-    clearInterval(id);
-    timerDisplay.innerText = "00:00:00";
-
-    timerPauseBtn.disabled = true;
-    timerResetBtn.disabled = true;
-    timerStartBtn.disabled = false;
-}
+updateDate();
 
 
-//CLOCK FUNCTIONALITY
 
-let clockTime = document.getElementById('clock-time');
-let clockDate = document.getElementById('clock-date');
-let clockPeriod = document.getElementById('clock-period');
-let formatToggle = document.getElementById('format-toggle');
 
-let is24Hour = false;
+// stopwatch
 
-function updateClock() {
-    const now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    let seconds = now.getSeconds();
-    
-    // Format date
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    clockDate.innerText = now.toLocaleDateString('en-US', options);
-    
-    if (is24Hour) {
-        // 24-hour format
-        clockTime.innerText = formatTwoDigits(hours) + ":" + formatTwoDigits(minutes) + ":" + formatTwoDigits(seconds);
-        clockPeriod.style.display = 'none';
-    } else {
-        // 12-hour format
-        let period = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // Convert 0 to 12 for 12 AM
-        clockTime.innerText = formatTwoDigits(hours) + ":" + formatTwoDigits(minutes) + ":" + formatTwoDigits(seconds);
-        clockPeriod.innerText = period;
-        clockPeriod.style.display = 'block';
+let display=document.getElementById('stopwatch-time');
+let startbtn=document.getElementById('stopwatch-start');
+let stopbtn=document.getElementById('stowatch-pause');
+let deletebtn=document.getElementById('stopwatch-reset');
+let lapbtn=document.getElementById('stopwatch-lape');
+
+let second=0, minute=0, hour=0;
+let timer = null;
+
+function stopwatch(){
+
+    second++;
+    if(second==60){
+        second=0;
+        minute++;
+        if(minute==60){
+            minute=0;
+            hour++;
+        }
     }
+
+    let h =hour<10? "0"+hour : hour;
+    let m = minute<10? "0"+hour : hour;
+    let s = second<10? "0"+hour : hour;
+
+    display.innerText = h + ":" + m + ":" + s;
+
 }
 
-function toggleFormat() {
-    is24Hour = formatToggle.checked;
-    updateClock();
-}
-
-// Start the clock and update every second
-updateClock();
-setInterval(updateClock, 1000);
-
-// Add event listener to the checkbox
-formatToggle.addEventListener('change', toggleFormat);
+startbtn.addEventListener('click', () => {
+     if(timer!==null){
+        clearInterval(timer);
+    
+     }
+     setInterval(stopwatch,1000);
+})
