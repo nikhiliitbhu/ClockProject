@@ -63,7 +63,42 @@ updateDate();
 
 // stopwatch
 
-let stopwatch=document.getElementById('stopwatch');
-let start=document.getElementById('stopwatch-start');
-let stop=document.getElementById('stowatch-pause');
-let delete=document.getElementById('stopwatch-reset');
+// stopwatch
+
+let display=document.getElementById('stopwatch-time');
+let startBtn=document.getElementById('stopwatch-start');
+let stopbtn=document.getElementById('stowatch-pause');
+let deletebtn=document.getElementById('stopwatch-reset');
+let lapbtn=document.getElementById('stopwatch-lape');
+
+let second=0, minute=0, hour=0;
+let timer = null;
+
+function stopwatch(){
+
+    second++;
+    if(second==60){
+        second=0;
+        minute++;
+        if(minute==60){
+            minute=0;
+            hour++;
+        }
+    }
+
+    let h =hour<10? "0" + hour : hour;
+    let m = minute<10? "0" + hour : hour;
+    let s = second<10? "0" + hour : hour;
+
+    display.innerText = h + ":" + m + ":" + s;
+
+}
+
+startBtn.addEventListener('click', function() {
+     if(timer!==null){
+        clearInterval(timer);
+    
+     }
+     setInterval(stopwatch,1000);
+})
+ejfkjfjkegf
