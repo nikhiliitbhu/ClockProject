@@ -26,14 +26,29 @@ function updateTime(){
     let minute=now.getMinutes();
     let second=now.getSeconds();
 
+    let clockPeriod = document.getElementById('clock-period');
+    let format = document.getElementById('format-toggle');
     let time = hour +":"+ minute+":"+ second;
-    document.getElementById('clock-time').innerText= time;
-    
 
+    if(format.checked){
+        clockPeriod.innerText= null
+    } else {
+        if(hour>=12){
+    if(hour>=13){
+        hour = hour-12;
+    }
+
+    time = hour + time.slice(2);
+    clockPeriod.innerText="pm"
+}
+else if(hour<12){
+    clockPeriod.innerText="am"
+}
+    }
+    document.getElementById('clock-time').innerText= time;
 }
 setInterval(updateTime,1000);
 updateTime();
-
 
 
 function updateDate(){
@@ -43,6 +58,12 @@ function updateDate(){
 }
 updateDate();
 
-function updateclockperiod(){
-    let now=(new Date()).toString().slice()
-}
+
+
+
+// stopwatch
+
+let stopwatch=document.getElementById('stopwatch');
+let start=document.getElementById('stopwatch-start');
+let stop=document.getElementById('stowatch-pause');
+let delete=document.getElementById('stopwatch-reset');
