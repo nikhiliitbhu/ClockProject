@@ -224,7 +224,7 @@ timerStart.addEventListener('click', function() {
     }
 
     if (timerSec <= 0) {
-        alert("Please set a valid timer first.");
+        alert(" Please set a valid timer first.");
         return;
     }
 
